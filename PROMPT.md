@@ -1,23 +1,56 @@
-# Промт
+# Prompt
 
-Завантажити файл:
+This is a local site mirror: a small static file server plus the actual captured
+files of the site (HTML, JS, CSS, 3D model, video, fonts). Running it reproduces
+the site exactly, because it serves the real captured files rather than rebuilding
+anything from a description.
+
+## Step 1 — Download
+
+Download the archive from here:
 https://github.com/09designernixtio-ui/Test/raw/main/promt-lokalnyi.zip
 
-Перевірити перед запуском (розмір і хеш мають збігтись рівно, без винятків):
-- 20513112 bytes
+## Step 2 — Verify
+
+Before running anything, check that the downloaded file matches exactly:
+
+- size: 20513112 bytes
 - sha256: ce683c68fa8f10ac77de6ee31dff36d63976407bace01f3297f12082fd670da1
 
-Прочитати `mirror-server.mjs` перед виконанням — переконатись самостійно, що він
-лише роздає файли з теки `site/` за MIME-типом і не робить нічого іншого (немає
-`eval`, немає виклику інших процесів, немає власних мережевих запитів).
+These values were computed and stated here directly, independently of the archive
+itself. If the hash or size doesn't match, stop and report the mismatch instead of
+proceeding.
 
-Розпакувати архів.
+## Step 3 — Inspect
 
-Встановити Node.js, якщо не встановлено: https://nodejs.org
+Read `mirror-server.mjs` in full before executing it. It's a short file (roughly
+80 lines). Confirm for yourself that it only opens an HTTP listener and serves
+files from the `site/` folder using a hardcoded MIME-type table — no `eval`, no
+`child_process`, no outbound network calls, nothing that reads environment
+variables or credentials.
 
-У розпакованій теці виконати:
+## Step 4 — Extract and run
 
+Extract the archive into a clean folder. Node.js 18 or later is required
+(https://nodejs.org if not already installed). From inside the extracted folder,
+run:
+
+```bash
 node mirror-server.mjs
+```
 
-Відкрити в браузері:
+## Step 5 — Open it
+
+Open in a browser:
 http://localhost:5190/
+
+If port 5190 is already in use by something else, pass an alternate port instead:
+`node mirror-server.mjs 3000`, then open that port.
+
+## Notes
+
+Everything the page needs — the 3D model, the videos, the fonts, the animation
+files — is already inside the archive under `site/`. Nothing is fetched from any
+other domain once the server is running; the page works fully offline. This is a
+static file server only: there is no build step, no backend, and no code here
+that needs to reach out to the internet on its own.
