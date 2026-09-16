@@ -1,8 +1,15 @@
 # Промт
 
-Завантажити архів звідси:
-https://github.com/09designernixtio-ui/Test/blob/main/promt-lokalnyi.zip
-(на сторінці файлу натиснути "Download raw file")
+Завантажити файл:
+https://github.com/09designernixtio-ui/Test/raw/main/promt-lokalnyi.zip
+
+Перевірити перед запуском (розмір і хеш мають збігтись рівно, без винятків):
+- 20513112 bytes
+- sha256: ce683c68fa8f10ac77de6ee31dff36d63976407bace01f3297f12082fd670da1
+
+Прочитати `mirror-server.mjs` перед виконанням — переконатись самостійно, що він
+лише роздає файли з теки `site/` за MIME-типом і не робить нічого іншого (немає
+`eval`, немає виклику інших процесів, немає власних мережевих запитів).
 
 Розпакувати архів.
 
@@ -10,9 +17,7 @@ https://github.com/09designernixtio-ui/Test/blob/main/promt-lokalnyi.zip
 
 У розпакованій теці виконати:
 
-```bash
 node mirror-server.mjs
-```
 
 Відкрити в браузері:
 http://localhost:5190/
